@@ -2,3 +2,5 @@ node_modules
 todo.txt
 /generated/prisma
 .env
+
+/prisma/generated/prisma
