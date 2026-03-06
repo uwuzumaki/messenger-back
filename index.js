@@ -2,6 +2,8 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
+import db from "./db/query.js";
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -16,7 +18,13 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
+  socket.on("chat message", async (msg) => {
+    let result;
+    try {
+      result = await db.createMessage(msg);
+    } catch (error) {
+      return;
+    }
     io.emit("chat message", msg);
     console.log(msg);
   });
