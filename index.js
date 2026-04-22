@@ -1,10 +1,24 @@
 import express from "express";
+import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
 import db from "./db/query.js";
+import router from "./routers/index.js";
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  }),
+);
+
+app.use("/register", router.registration);
+
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
