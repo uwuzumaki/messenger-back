@@ -19,3 +19,10 @@ model Message {
   date DateTime @default(now())
   content String?
 }
+
+model User {
+  id String @id @default(uuid())
+  email String
+  username String 
+  password String
+}
