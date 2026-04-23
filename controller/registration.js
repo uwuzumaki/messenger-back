@@ -2,8 +2,14 @@ import bcrypt from "bcryptjs";
 import db from "../db/query.js";
 
 const registration = async (req, res) => {
-  console.log(req.body);
-  res.json(req.body);
+  const body = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+    user = await db.register(body.email, body.username, hashedPassword);
+    res.json("success");
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export default { registration };
