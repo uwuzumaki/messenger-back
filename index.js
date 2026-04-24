@@ -5,6 +5,9 @@ import { Server } from "socket.io";
 
 import db from "./db/query.js";
 import router from "./routers/index.js";
+import prismaSession from "./authentication/session.js";
+import passport from "passport";
+import "./authentication/passport.js";
 
 const app = express();
 
@@ -16,6 +19,8 @@ app.use(
     credentials: true,
   }),
 );
+app.use(prismaSession);
+app.use(passport.session());
 
 app.use("/register", router.registration);
 
