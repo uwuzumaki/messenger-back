@@ -23,6 +23,7 @@ app.use(prismaSession);
 app.use(passport.session());
 
 app.use("/register", router.registration);
+app.use("/authentication", router.authentication);
 
 const server = createServer(app);
 const io = new Server(server, {
