@@ -9,6 +9,7 @@ const register = async (email, username, password) => {
     },
     select: {
       id: true,
+      username: true,
     },
   });
   return user;
