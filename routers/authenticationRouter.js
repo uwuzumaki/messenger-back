@@ -3,13 +3,8 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post(
-  "/",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  }),
-  (req, res) => res.status(200),
+router.post("/", passport.authenticate("local"), (req, res) =>
+  res.send({ message: "authenticated" }),
 );
 
 export default router;
