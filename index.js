@@ -50,6 +50,10 @@ app.get("/", (req, res) => {
 //   });
 // });
 
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
