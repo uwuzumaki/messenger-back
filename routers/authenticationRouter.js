@@ -19,9 +19,12 @@ router.get("/logout", (req, res, next) => {
     if (err) return next(err);
     req.session.destroy((err) => {
       if (err) return next(err);
-      res.clearCookie;
+      res.clearCookie("connect.sid");
+      res.status(200).json({ message: "Logged out" });
     });
   });
 });
 
 export default router;
+
+//error handler?
