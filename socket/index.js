@@ -8,6 +8,7 @@ const socketSetup = (server) => {
       origin: ["http://localhost:5173"],
       credentials: true,
     },
+    connectionStateRecovery: {},
   });
 
   io.on("connection", (socket) => {
