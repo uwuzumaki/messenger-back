@@ -19,7 +19,12 @@ passport.use(
           message: "There's no user with these credentials!",
         });
       }
-      return done(null, user);
+      const newUser = {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      };
+      return done(null, newUser);
     } catch (err) {
       return done(err);
     }
