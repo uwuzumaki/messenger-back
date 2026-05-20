@@ -36,7 +36,8 @@ const findUserID = async (id) => {
 const createMessage = async (content) => {
   const message = await prisma.message.create({
     data: {
-      content,
+      content: content.msg,
+      userId: content.id,
     },
   });
   return message;
