@@ -34,27 +34,21 @@ const findUserID = async (id) => {
 };
 
 const createMessage = async (content) => {
-  const message = await prisma.message.create({
-    data: {
-      content: content.msg,
-      userId: content.id,
-    },
+  const message = await prisma.$transaction(async (prisma) => {
+    const user = await prisma.user.findUnique({
+      where: { id: content.id },
+      select: { username: true },
+    });
+    const messageUser = await prisma.message.create({
+      data: {
+        content: content.msg,
+        userId: content.id,
+        username: user.username,
+      },
+    });
+    return messageUser;
   });
   return message;
-};
-
-const getMessageAfterTime = async (time) => {
-  const messages = await prisma.message.findMany({
-    where: {
-      date: {
-        gt: time,
-      },
-    },
-    orderBy: {
-      date: "asc",
-    },
-  });
-  return messages;
 };
 
 export default {
@@ -62,5 +56,4 @@ export default {
   findUserEmail,
   findUserID,
   createMessage,
-  getMessageAfterTime,
 };
