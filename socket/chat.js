@@ -1,12 +1,14 @@
 import db from "../db/query.js";
 
-const chat = (io, socket) => {
-  socket.on("chat message", async (msg) => {
+const chat = async (io, socket) => {
+  socket.on("chat message", async (message) => {
     try {
-      const result = await db.createMessage(msg);
-      io.emit("chat message", msg);
+      console.log(message);
+      const msg = await db.createMessage(message);
       console.log(msg);
+      io.emit("chat message", msg);
     } catch (error) {
+      console.log(error);
       socket.emit("error", { message: "Failed to send message" });
     }
   });
