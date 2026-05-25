@@ -34,19 +34,10 @@ const findUserID = async (id) => {
 };
 
 const createMessage = async (content) => {
-  const message = await prisma.$transaction(async (prisma) => {
-    const user = await prisma.user.findUnique({
-      where: { id: content.id },
-      select: { username: true },
-    });
-    const messageUser = await prisma.message.create({
-      data: {
-        content: content.msg,
-        userId: content.id,
-        username: user.username,
-      },
-    });
-    return messageUser;
+  const message = await prisma.message.create({
+    data: {
+      content,
+    },
   });
   return message;
 };
